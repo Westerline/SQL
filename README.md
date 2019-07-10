@@ -1,37 +1,27 @@
-# Batch Scripting Repository
+# SQL Tools Repository
 
-The purpose of this repository is to organize useful batch snippets, functions, scripts, and templates. These items are particularly helpful where PowerShell isn't available; or where a quick, automated solution is required.
+* This repository is a collection of tool-oriented Transact-SQL scripts. These tools are meant to perform one or two simple tasks. For more complex sequences, you can mix and match tools.
 
 ## Getting Started
 
-Borrow from these items as required to create your own batch scripts.
+* Download the repository and unzip the files to your preferred destination. For more complex sequences, create a caller script with any proprietary data you require. Then call the tools you need for your task. Mix and match the tools you use to tackle different tasks.
 
 ### Prerequisites
 
-*Windows-based Operating System
-*Text Editor with Syntax Highlighting Such as Notepad++ (Optional)
+* SQL Server version 2012 or Higher
+* Virtual Machine Environment for Testing (Optional)
+* Text Editor with Syntax Highlighting Such as Notepad++ (Optional)
 
 ### Coding/Indentation Style
 
-*Any comment-based help should be located towards the top of the document. These comments should focus on items which aren't included in Microsoft's help system for CMD.
-*Comments should be written as complete sentences.
-*The first letter of commands should be capitalized
-*GNU style is adopted for indentation, refer to https://en.wikipedia.org/wiki/Indentation_style#GNU_style for more details.
-
-```
-Example
-while (x == y)
-    {
-    something();
-    somethingelse();
-    }
-
-finalthing();
-```
+* Any comments should be located towards the top of the document. These comments should focus on items which aren't included in Microsoft's Transact-SQL Reference documentation (https://docs.microsoft.com/en-us/sql/t-sql/language-reference?view=sql-server-2017).
+* Comments should be written as complete sentences.
+* The first letter of commands should be capitalized
+* K&R is the prefered indentation style, refer to https://en.wikipedia.org/wiki/Indentation_style#K&R_style for more details.
 
 ## Contributing
 
-Feel free to email me at esterline.wj.s@gmail.com if you would like to contribute to this project!
+* Feel free to email me at esterline.wj.s@gmail.com if you would like to contribute to this project!
 
 ## Authors
 
@@ -39,4 +29,4 @@ Feel free to email me at esterline.wj.s@gmail.com if you would like to contribut
 
 ## Acknowledgments
 
-* Special thanks to the wonderful people over at https://ss64.com/ for their command line guides.
+*Special thanks to Khan Academy for their "Intro to SQL" online course.
