@@ -1,3 +1,0 @@
-https://github.com/sqlcollaborative/Invoke-SqlCmd2
-https://blog.codinghorror.com/give-me-parameterized-sql-or-give-me-death/
-https://blogs.msdn.microsoft.com/sqlphp/2008/09/30/how-and-why-to-use-parameterized-queries/
