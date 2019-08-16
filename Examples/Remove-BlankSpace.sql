@@ -1,10 +1,12 @@
-Use <Database>
- 
+Declare @Database
+
+Use @Database
+
 Begin Transaction
- 
-Update <Table>
+
+Update
 Set Description = Rtrim(Description)
-Where Description Like '% ' 
+Where Description Like '% '
 
 Commit Transaction
 

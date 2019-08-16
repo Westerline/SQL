@@ -17,8 +17,8 @@
 
 .NOTES
     Author: Wesley Esterline
-    Resources: 
-    Updated:     
+    Resources:
+    Updated:
     Modified from Template Found on Spiceworks: https://community.spiceworks.com/scripts/show/3647-powershell-script-template?utm_source=copy_paste&utm_campaign=growth
 #>
 
@@ -44,13 +44,13 @@ Begin {
 Process {
 
     Try {
-       
+
         Invoke-Sqlcmd -query "SELECT TABLE_NAME FROM <DATABASE_NAME>.INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'"
 
     }
 
     Catch [SpecificException] {
-        
+
     }
 
     Catch {

@@ -1,1 +1,2 @@
-Select name From master.sys.databases
+Select name
+From master.sys.databases

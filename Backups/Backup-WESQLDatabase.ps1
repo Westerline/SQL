@@ -5,17 +5,17 @@ Param (
     [String] $Instance = '',
     [String] $Database,
     [String] $Path
-    
+
 )
 
 Try {
 
-    $Backup = (Invoke-Sqlcmd -ServerInstance $Instance -Query "BACKUP DATABASE [$Database] TO DISK = '$Path'") | Tee
+    $Backup = (Invoke-Sqlcmd -ServerInstance $Instance -Query "BACKUP DATABASE [$Database] TO DISK = '$Path'") | Tee-Object
 
     $Property = @{Hostname = $Hostname
-        Database      = $Database
-        Status        = 'Successful'
-        BackupResults = $Backup
+        Database           = $Database
+        Status             = 'Successful'
+        BackupResults      = $Backup
     }
 
 }
@@ -23,9 +23,9 @@ Try {
 Catch {
 
     $Property = @{Hostname = $Hostname
-        Database      = $Database
-        Status        = 'Unsuccessful'
-        BackupResults = 'Null'
+        Database           = $Database
+        Status             = 'Unsuccessful'
+        BackupResults      = 'Null'
     }
 
 }

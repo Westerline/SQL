@@ -17,8 +17,8 @@
 
 .NOTES
     Author: Wesley Esterline
-    Resources: 
-    Updated:     
+    Resources:
+    Updated:
     Modified from Template Found on Spiceworks: https://community.spiceworks.com/scripts/show/3647-powershell-script-template?utm_source=copy_paste&utm_campaign=growth
 #>
 
@@ -42,11 +42,11 @@ Begin {
 Process {
 
     Try {
-       
+
         Function Test-WE_SQLBackup ($FilePath) {
-                          
+
             Invoke-Sqlcmd "Restore VERIFYONLY FROM DISK = '$FilePath'" -ErrorVariable BackupError -ErrorAction SilentlyContinue
-            
+
             If ($BackupError -match 'VERIFY DATABASE is terminating abnormally') {
 
                 Write-Host "Invalid Backup or an Unexpected Error Has Occurred." -ForegroundColor DarkRed -BackgroundColor DarkYellow
@@ -57,7 +57,7 @@ Process {
 
                 Write-Host "The backup set on file " -ForegroundColor DarkGreen -BackgroundColor Cyan
                 $LocalBackupIntegrity = $False
-                      
+
             }
 
         }
@@ -65,7 +65,7 @@ Process {
     }
 
     Catch [SpecificException] {
-        
+
     }
 
     Catch {

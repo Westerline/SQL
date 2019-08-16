@@ -5,7 +5,7 @@ Param (
     [String] $ServerInstance = '',
     [String] $Database,
     [String] $SQLScriptPath
-    
+
 )
 
 Try {
@@ -13,9 +13,9 @@ Try {
     $Script = Invoke-Sqlcmd -ServerInstance $ServerInstance -HostName $HostName -Database $Database -InputFile $SQLScriptPath -ErrorAction Stop
 
     $Property = @{Hostname = $Hostname
-        Database      = $Database
-        Status        = 'Connected'
-        ScriptResults = $Script
+        Database           = $Database
+        Status             = 'Connected'
+        ScriptResults      = $Script
     }
 
 }
@@ -23,9 +23,9 @@ Try {
 Catch {
 
     $Property = @{Hostname = $Hostname
-        Database      = $Database
-        Status        = 'Disconnected'
-        ScriptResults = 'Null'
+        Database           = $Database
+        Status             = 'Disconnected'
+        ScriptResults      = 'Null'
     }
 
 }

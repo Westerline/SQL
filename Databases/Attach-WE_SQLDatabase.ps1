@@ -14,7 +14,7 @@ Try {
     }
 }
 
-Catch { 
+Catch {
     Write-Verbose "Unable to attach the database: $DatabaseName."
     $Property = @{
         Status           = 'Unsuccessful'

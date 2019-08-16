@@ -1,4 +1,4 @@
-/* 
+/*
 Script used to query Infinity against a large number of UPCs. Steps to use this script:
 	1. Under the "Where UPC In(" Section, copy in all of the UPCs you want to use in your query.
 	2. Once the UPCs are between your parentheses, highlight all of them and then press CTRL + H
@@ -9,23 +9,23 @@ Script used to query Infinity against a large number of UPCs. Steps to use this 
 	7. Check the first and last rows which were highlighted, these will likely contain an extra ' or , that you need to remove for the syntax error to be resolved.
 */
 
-Use 
+Use
 AKPOS
 
-Select 
+Select
 	B_Items.UPC,
 	B_Items.Price1,
 	B_Items.Cost,
 	B_Items.Branch,
 	Items.Description
 
-From 
-	B_Items 
+From
+	B_Items
 
-Join Items
+	Join Items
 	On B_Items.UPC = Items.UPC
 
-Where 
+Where
 
 /*	UPC IN ()
 */
@@ -36,5 +36,5 @@ Where
 	AND
 	B_Items.Branch Between 000 AND 000
 
-Order by 
+Order by
 Description

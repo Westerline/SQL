@@ -20,7 +20,7 @@
 .NOTES
     Author: Wesley Esterline
     Resources: Modified from the original script available at https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/dd206997(v=sql.105)
-    Updated:     
+    Updated:
     Modified from Template Found on Spiceworks: https://community.spiceworks.com/scripts/show/3647-powershell-script-template?utm_source=copy_paste&utm_campaign=growth
 #>
 
@@ -50,8 +50,8 @@ Process {
         [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement")
         $smo = 'Microsoft.SqlServer.Management.Smo.'
         $wmi = New-Object ($smo + 'Wmi.ManagedComputer').
-        $Wmi    
-        $uri = "ManagedComputer[@Name='<computer_name>']/ ServerInstance[@Name='MSSQLSERVER']/ServerProtocol[@Name='Tcp']" 
+        $Wmi
+        $uri = "ManagedComputer[@Name='<computer_name>']/ ServerInstance[@Name='MSSQLSERVER']/ServerProtocol[@Name='Tcp']"
         $Tcp = $wmi.GetSmoObject("$uri")
         $Tcp.IsEnabled = $true
         $Tcp.Alter()
@@ -66,7 +66,7 @@ Process {
     }
 
     Catch [SpecificException] {
-        
+
     }
 
     Catch {

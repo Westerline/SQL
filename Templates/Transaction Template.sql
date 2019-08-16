@@ -1,7 +1,7 @@
 /*
 Script to set Infinity RMS Cash Balancing trading day name format setting.
-This can also be done via the GUI, but has been scripted for a mass deployment scenario. 
-This script will set the format as "yyyymmdd - date". 
+This can also be done via the GUI, but has been scripted for a mass deployment scenario.
+This script will set the format as "yyyymmdd - date".
 */
 
 USE [AKPOS]
@@ -12,7 +12,7 @@ GO
 
 BEGIN TRY
 
-	BEGIN TRANSACTION AUTOTRADINGFORMAT 
+	BEGIN TRANSACTION AUTOTRADINGFORMAT
 
 		UPDATE
 		dbo.Config
@@ -25,36 +25,36 @@ BEGIN TRY
 
 	COMMIT TRANSACTION AUTOTRADINGFORMAT
 
-	PRINT 'Automatic trading name format set to "yyyymmdd - Date"'	
+	PRINT 'Automatic trading name format set to "yyyymmdd - Date"'
 
-END TRY	
+END TRY
 
 
 
-BEGIN CATCH 
+BEGIN CATCH
 
   IF (@@TRANCOUNT > 0)
 
    BEGIN
 
-      ROLLBACK TRANSACTION AUTOTRADINGFORMAT
-   
-      PRINT 'Error detected, all changes reversed'
+	ROLLBACK TRANSACTION AUTOTRADINGFORMAT
 
-   END 
+	PRINT 'Error detected, all changes reversed'
+
+END
 
    SELECT
 
-       ERROR_NUMBER() AS ErrorNumber,
-    
-	   ERROR_SEVERITY() AS ErrorSeverity,
-    
-	   ERROR_STATE() AS ErrorState,
-    
-	   ERROR_PROCEDURE() AS ErrorProcedure,
-    
-	   ERROR_LINE() AS ErrorLine,
-    
-	   ERROR_MESSAGE() AS ErrorMessage
+	ERROR_NUMBER() AS ErrorNumber,
+
+	ERROR_SEVERITY() AS ErrorSeverity,
+
+	ERROR_STATE() AS ErrorState,
+
+	ERROR_PROCEDURE() AS ErrorProcedure,
+
+	ERROR_LINE() AS ErrorLine,
+
+	ERROR_MESSAGE() AS ErrorMessage
 
 END CATCH

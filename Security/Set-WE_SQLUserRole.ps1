@@ -17,8 +17,8 @@
 
 .NOTES
     Author: Wesley Esterline
-    Resources: 
-    Updated:     
+    Resources:
+    Updated:
     Modified from Template Found on Spiceworks: https://community.spiceworks.com/scripts/show/3647-powershell-script-template?utm_source=copy_paste&utm_campaign=growth
 #>
 
@@ -44,13 +44,13 @@ Begin {
 Process {
 
     Try {
-       
+
         Invoke-Sqlcmd -query "sp_addsrvrolemember '<Login>', '<Role>'"
 
     }
 
     Catch [SpecificException] {
-        
+
     }
 
     Catch {

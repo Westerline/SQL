@@ -17,7 +17,7 @@ Process {
     Try {
         Invoke-Sqlcmd -HostName $HostName -Query "CREATE LOGIN $LoginName WITH PASSWORD = '$LoginPassword';"
         Invoke-Sqlcmd -HostName $HostName -Query "EXEC master..sp_addsrvrolemember @loginame = N'$LoginName', @rolename = N'$Role';"
-        $Login = Invoke-SQLCMD -Query "SELECT * FROM MASTER.SYS.SERVER_PRINCIPALS WHERE NAME = '$LoginName'"
+        $Login = Invoke-Sqlcmd -Query "SELECT * FROM MASTER.SYS.SERVER_PRINCIPALS WHERE NAME = '$LoginName'"
         $Property = @{
             Status              = 'Success'
             Name                = $Login.name
@@ -39,7 +39,7 @@ Process {
 
     Finally {
         $Object = New-Object -TypeName PSObject -Property $Property
-        Write-output $Object
+        Write-Output $Object
     }
 }
 
