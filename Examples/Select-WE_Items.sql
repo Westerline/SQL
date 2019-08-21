@@ -22,10 +22,6 @@ From
 	Items
 
 Where
-
-/*	UPC IN ()
-*/
-
 	Description LIKE 'Name %'
 	AND
 	InActive = '0'

@@ -79,17 +79,6 @@ From exercise_logs
 Where calories > 50 and minutes < 30
 Order by Calories
 
-Example IN statements
-using
-AKPOS:
-Select *
-from B_Config
-Where Value IN ('Touch');
-Select *
-from B_Config
-Where Value NOT IN ('Touch');
-
-
 Create Table drs_favorites
 (
     id Integer Identity(1,1) Primary Key,
@@ -109,15 +98,6 @@ Insert Into drs_favorites
     (type, reason)
 Values
     ('Skateboarding', 'improves endurance and flexibility.');
-
-Example Nested IN-
-Select Statement Using
-AKPOS:
-Select *
-From B_Config
-Where Branch IN (Select ID
-From Branches
-Where ID = 102);
 
 SELECT title
 FROM songs

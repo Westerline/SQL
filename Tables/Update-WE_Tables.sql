@@ -1,7 +1,7 @@
 Declare @Databasename varchar(60)
 Set @Databasename = ''
 
-USE @Databasename
+USE Databasename
 
 GO
 
