@@ -7,6 +7,8 @@ To-do:
     -Allow for variables as input using template strings: https:
 //stackoverflow.com/questions/727788/how-to-
 use-a-variable-for-the-database-name-in-t-sql/727815
+Resources: Modified from code found on: https:
+//www.quackit.com/sql_server/t-sql/examples/create_database.cfm
 ===========================
 */
 

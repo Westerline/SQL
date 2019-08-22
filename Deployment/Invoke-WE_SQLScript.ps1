@@ -1,4 +1,4 @@
-Function Install-WE_SQL2014Express {
+﻿Function Invoke-WE_SQLScript {
 
     <#
 
@@ -37,7 +37,7 @@ Function Install-WE_SQL2014Express {
         Resources:
             -
         To Do:
-            -Expand function to work for multiple versions of SQL, accepting different installers and configuraiton files.
+            -
         Misc:
             -
 
@@ -65,22 +65,21 @@ Function Install-WE_SQL2014Express {
         [Alias('HostName')]
         [String[]] $ComputerName = 'LocalHost',
 
+        [Parameter(Mandatory = $False,
+            ValueFromPipeline = $True,
+            ValueFromPipelineByPropertyName = $True)]
+        [ValidateNotNullOrEmpty()]
+        [String] $ServerInstance = '.',
+
+        [Parameter(Mandatory = $False,
+            ValueFromPipeline = $True,
+            ValueFromPipelineByPropertyName = $True)]
+        [String] $Database,
+
         [Parameter(Mandatory = $True,
             ValueFromPipeline = $True,
             ValueFromPipelineByPropertyName = $True)]
-        [String] $Path,
-
-        [Parameter(Mandatory = $False,
-            ValueFromPipeline = $True,
-            ValueFromPipelineByPropertyName = $True)]
-        [ValidateNotNullOrEmpty()]
-        [String] $ConfigurationFile = 'ConfigurationFile.ini',
-
-        [Parameter(Mandatory = $False,
-            ValueFromPipeline = $True,
-            ValueFromPipelineByPropertyName = $True)]
-        [ValidateNotNullOrEmpty()]
-        [String] $SAPWD = 'sa123'
+        [String] $SQLScriptPath
 
     )
 
@@ -96,25 +95,30 @@ Function Install-WE_SQL2014Express {
 
             Try {
 
-                Set-Location -Path $Path
-                $Setup = & .\Setup.exe /ConfigurationFile="$ConfigurationFile" /SAPWD="$SAPWD"
+                $ScriptResults = Invoke-Sqlcmd -ServerInstance $ServerInstance -HostName $Computer -Database $Database -InputFile $SQLScriptPath -ErrorAction Stop | Tee-Object
+                $ErrorActionPreference = $StartErrorActionPreference
                 $Property = @{
-                    Hostname = $Computer
-                    Status   = 'Successful'
-                    Setup    = $Setup
+                    Hostname      = $Computer
+                    Database      = $Database
+                    Status        = 'Connected'
+                    ScriptResults = $ScriptResults
                 }
 
             }
 
             Catch {
 
+                Write-Verbose "Unable to run SQL Script $SQlScriptPath on $Computer. Please check that the computer is available on the network and that the PowerShell script policy allows for scripts."
+
                 $Property = @{
-                    Hostname = $Computer
-                    Status   = 'Unsuccessful'
-                    Setup    = 'Null'
+                    Hostname      = $Computer
+                    Database      = 'NULL'
+                    Status        = 'Disconnected'
+                    ScriptResults = 'NULL'
                 }
 
             }
+
 
             Finally {
 
@@ -130,7 +134,6 @@ Function Install-WE_SQL2014Express {
     End {
 
         $ErrorActionPreference = $StartErrorActionPreference
-        Stop-Transcript | Out-Null
 
     }
 
