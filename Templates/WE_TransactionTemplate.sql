@@ -14,6 +14,8 @@ Transaction Script Template
 */
 
 DECLARE @database_name VARCHAR(50) = 'database1'
+DECLARE @data_file VARCHAR(250) = 'C:\temp\AdventureWorks_Data.mdf'
+DECLARE @log_file VARCHAR(250) = 'C:\temp\AdventureWorks_Log.ldf'
 
 USE [@database_name]
 
