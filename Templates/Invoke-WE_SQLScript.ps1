@@ -1,6 +1,7 @@
 [CmdletBinding()]
 
-Param (
+Param
+(
 
     [String] $Instance = '',
     [String] $Database,

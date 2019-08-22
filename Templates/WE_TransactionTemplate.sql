@@ -1,18 +1,27 @@
 /*
-Script to set Infinity RMS Cash Balancing trading day name format setting.
-This can also be done via the GUI, but has been scripted for a mass deployment scenario.
-This script will set the format as "yyyymmdd - date".
+===========================
+Transaction Script Template
+-Start with try and catch blocks so that the transaction can be reversed if it fails.
+-Within try, begin a named transaction and increments @@TRANCOUNT by 1.
+-If the transaction was successful, commit it and print an output message.
+-If the transaction was unsuccessful, go to the catch block.
+-If @@TRANCOUNT has incremented, roll back the named transaction.
+-Lastly, output error/debugging information
+-GO is used to isolate one part of the script from another.
+-BEGIN and END bind together logical blocks of code. This is necessary if using for loops, if statements, etc. It's optional to use these in the start/end of a stored procedure.
+-BEGIN TRAN and END TRAN are used to wrap the code block in a transaction and the transaction can be rolled back if an error occurrs.
+===========================
 */
 
-USE [AKPOS]
+DECLARE @database_name VARCHAR(50) = 'database1'
+
+USE [@database_name]
 
 GO
 
-
-
 BEGIN TRY
 
-	BEGIN TRANSACTION AUTOTRADINGFORMAT
+	BEGIN TRANSACTION TRANSACTION1
 
 		UPDATE
 		dbo.Config
@@ -23,38 +32,27 @@ BEGIN TRY
 		WHERE
 		DESCRIPTION = 'Automatic Trading Name Format'
 
-	COMMIT TRANSACTION AUTOTRADINGFORMAT
+	COMMIT TRANSACTION TRANSACTION1
 
 	PRINT 'Automatic trading name format set to "yyyymmdd - Date"'
 
 END TRY
-
-
 
 BEGIN CATCH
 
   IF (@@TRANCOUNT > 0)
 
    BEGIN
-
-	ROLLBACK TRANSACTION AUTOTRADINGFORMAT
-
+	ROLLBACK TRANSACTION TRANSACTION1
 	PRINT 'Error detected, all changes reversed'
-
 END
 
    SELECT
-
 	ERROR_NUMBER() AS ErrorNumber,
-
 	ERROR_SEVERITY() AS ErrorSeverity,
-
 	ERROR_STATE() AS ErrorState,
-
 	ERROR_PROCEDURE() AS ErrorProcedure,
-
 	ERROR_LINE() AS ErrorLine,
-
 	ERROR_MESSAGE() AS ErrorMessage
 
 END CATCH
