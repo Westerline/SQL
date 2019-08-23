@@ -1,87 +1,143 @@
-﻿<#
-.SYNOPSIS
-    This is a very short summary of the script.
+﻿Function Set-WE_SQLNetConfiguration {
 
-.DESCRIPTION
-    Load the assemblies and modules
-    List the object properties, including the instance names.
-    Enable the named pipes protocol for the default instance.
+    <#
 
-.PARAMETER UseExitCode
-    This is a detailed description of the parameters.
+    .SYNOPSIS
+        Synopsis here
 
-.EXAMPLE
-    Scriptname.ps1
+    .DESCRIPTION
+        Configures the TCP, Named Pipes, and Shared Memory protocols for SQL Server.
+        In SQL Server 2012 and 2014 is there’s no longer a need to manually reference the SQL Server assemblies to use SMO
+        because they’re automatically loaded when the SQLPS module is imported. If you're using SQL Server 2008, you can try adding the following lines after "Import-Module -Name sqlps"
+            -$Assembly_SMO = [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo")
+            -$Assembly_WMIManagement = [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement")
 
-    Description
-    ----------
-    This would be the description for the example.
+    .PARAMETER
+        -ParameterName [<String[]>]
+            Parameter description here.
 
-.NOTES
-    Author: Wesley Esterline
-    Resources: Modified from the original script available at https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/dd206997(v=sql.105)
-    Updated:
-    Modified from Template Found on Spiceworks: https://community.spiceworks.com/scripts/show/3647-powershell-script-template?utm_source=copy_paste&utm_campaign=growth
-#>
+            Required?                    true
+            Position?                    named
+            Default value                None
+            Accept pipeline input?       false
+            Accept wildcard characters?  false
 
-[CmdletBinding()]
+        <CommonParameters>
+            This cmdlet supports the common parameters: Verbose, Debug,
+            ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+            OutBuffer, PipelineVariable, and OutVariable. For more information, see
+            about_CommonParameters (https:/go.microsoft.com/fwlink/?LinkID=113216).
 
-Param (
+    .INPUTS
+        System.String[]
+            Input description here.
 
-    [Parameter(Mandatory = $False)]
-    [Alias('Transcript')]
-    [string]$TranscriptFile
+    .OUTPUTS
+        System.Management.Automation.PSCustomObject
 
-)
+    .NOTES
+        Version: 1.0
+        Author(s): Wesley Esterline
+        Resources:
+            -Modified from the original script available at https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/dd206997(v=sql.105)
+        To Do:
+            -Add 32-bit support
+        Misc:
+            -Requires RunasAdmin
+            -Requires SQL Server 2012 or higher.
 
-Begin {
-    Start-Transcript $TranscriptFile  -Append -Force
-    $StartErrorActionPreference = $ErrorActionPreference
-    $ErrorActionPreference = 'Stop'
+    .Example
+        -------------------------- EXAMPLE 1 --------------------------
 
-}
+        C:\PS>WE_ModuleTemplate
 
-Process {
+        Description
 
-    Try {
+        -----------
 
-        Import-Module "sqlps" -DisableNamechecking
-        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.Smo")
-        [reflection.assembly]::LoadWithPartialName("Microsoft.SqlServer.SqlWmiManagement")
-        $smo = 'Microsoft.SqlServer.Management.Smo.'
-        $wmi = New-Object ($smo + 'Wmi.ManagedComputer').
-        $Wmi
-        $uri = "ManagedComputer[@Name='<computer_name>']/ ServerInstance[@Name='MSSQLSERVER']/ServerProtocol[@Name='Tcp']"
-        $Tcp = $wmi.GetSmoObject("$uri")
-        $Tcp.IsEnabled = $true
-        $Tcp.Alter()
-        $Tcp
-        $uri = "ManagedComputer[@Name='<computer_name>']/ ServerInstance[@Name='MSSQLSERVER']/ServerProtocol[@Name='Np']"
-        $Np = $wmi.GetSmoObject("$uri")
-        $Np.IsEnabled = $true
-        $Np.Alter()
-        $Np
-        Restart-Service -Name MSSQLSERVER -Force -Verbose
+        Insert here.
+
+    #>
+
+    [CmdletBinding(SupportsShouldProcess)]
+
+    Param (
+
+        [Parameter(Mandatory = $False,
+            ValueFromPipeline = $True,
+            ValueFromPipelineByPropertyName = $True,
+            HelpMessage = "Help. Message. Here.",
+            Position = 0)]
+        [ValidateNotNullOrEmpty()]
+        $InstanceName = 'MSSQLSERVER',
+
+        [Parameter(Mandatory = $False)]
+        [Switch]
+        $Force,
+
+        [Switch]
+        $TCPSetting,
+
+        [Switch]
+        $NPSetting
+
+    )
+
+    Begin {
+
+        $StartErrorActionPreference = $ErrorActionPreference
 
     }
 
-    Catch [SpecificException] {
+    Process {
+
+        Try {
+
+            $ErrorActionPreference = 'Stop'
+            Import-Module "sqlps" -DisableNamechecking
+            $WMI = New-Object -TypeName ('Microsoft.SqlServer.Management.Smo.' + 'Wmi.ManagedComputer')
+            $URI_TCP = "ManagedComputer[@Name='$Env:COMPUTERNAME']/ ServerInstance[@Name='$InstanceName']/ServerProtocol[@Name='TCP']"
+            $TCP = $WMI.GetSmoObject("$URI_TCP")
+            $TCP.IsEnabled = $TCPSetting
+            $TCP.Alter()
+            $URI_NP = "ManagedComputer[@Name='$Env:COMPUTERNAME']/ ServerInstance[@Name='$InstanceName']/ServerProtocol[@Name='NP']"
+            $NP = $WMI.GetSmoObject("$URI_NP")
+            $NP.IsEnabled = $NPSetting
+            $NP.Alter()
+            Restart-Service -Name MSSQLSERVER -Force:$Force
+            $ErrorActionPreference = $StartErrorActionPreference
+            $Property = @{
+                TCPSetting = $TCP.IsEnabled
+                NPSetting  = $NP.IsEnabled
+            }
+
+        }
+
+
+        Catch {
+
+            Write-Verbose "Unable to configure the network protocol settings for SQL Server. Ensure the computername matches the name of the SQL server, and that the instance name is correct."
+            $Property = @{
+                TCPSetting = $TCP.IsEnabled
+                NPSetting  = $NP.IsEnabled
+            }
+
+        }
+
+        Finally {
+
+
+            $Object = New-Object -TypeName PSObject -Property $Property
+            Write-Output $Object
+
+        }
 
     }
 
-    Catch {
+    End {
 
-
-    }
-
-    Finally {
+        $ErrorActionPreference = $StartErrorActionPreference
 
     }
 
-}
-
-End {
-
-    $ErrorActionPreference = $StartErrorActionPreference
-    Stop-Transcript | Out-Null
 }
