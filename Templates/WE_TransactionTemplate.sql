@@ -10,6 +10,10 @@ Transaction Script Template
 -GO is used to isolate one part of the script from another.
 -BEGIN and END bind together logical blocks of code. This is necessary if using for loops, if statements, etc. It's optional to use these in the start/end of a stored procedure.
 -BEGIN TRAN and END TRAN are used to wrap the code block in a transaction and the transaction can be rolled back if an error occurrs.
+-GO is used to terminate/separate an entire batch of code. If one GO batch has an error,
+the second GO batch will still execute.
+-Semi-Colon is used to terminate/separate blocks of code. If one SELECT statement has an
+error, the next SELECT statement will not execute if both are terminated by semi-colons.
 ===========================
 */
 

@@ -1,22 +1,35 @@
+/*
+===========================
+Get-WE_LoggedOnSQLUsers.sql
+
+.Description
+    Queries the SQL Server to see which users are logged in.
+    Can filter based on database name or other fields by adding a
+    WHERE statement.
+===========================
+*/
+
 SELECT
-    sp.[status],
-    loginame [Login],
-    hostname,
-    sd.name DBName,
-    cmd Command,
-    [program_name] ProgramName
+    processes.status AS 'Status',
+    processes.loginame AS 'Login Name',
+    processes.hostname AS 'Host Name',
+    databases.name AS 'Name',
+    processes.cmd as 'Cmd'
 
 FROM
-    master.dbo.sysprocesses sp
+    master.dbo.sysprocesses AS processes
 
     JOIN
-    master.dbo.sysdatabases sd
+    master.dbo.sysdatabases AS databases
 
     ON
-sp.dbid = sd.dbid
+    processes.dbid = databases.dbid
 
+/*
 WHERE
-sd.name = 'Database'
+	databases.name = 'Database'
+*/
 
 ORDER BY
-spid
+	processes.loginame,
+	databases.name
