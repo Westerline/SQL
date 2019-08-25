@@ -1,6 +1,3 @@
-
-
-
 Create Database IntroToSQL
 Create Table groceries
 (
