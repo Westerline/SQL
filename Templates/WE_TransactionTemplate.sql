@@ -21,7 +21,7 @@ DECLARE @database_name VARCHAR(50) = 'database1'
 DECLARE @data_file VARCHAR(250) = 'C:\temp\AdventureWorks_Data.mdf'
 DECLARE @log_file VARCHAR(250) = 'C:\temp\AdventureWorks_Log.ldf'
 
-USE [@database_name]
+USE [@database_name];
 
 GO
 
@@ -36,11 +36,11 @@ BEGIN TRY
 		Value = 'yyyymmdd - Date'
 
 		WHERE
-		DESCRIPTION = 'Automatic Trading Name Format'
+		DESCRIPTION = 'Automatic Trading Name Format';
 
 	COMMIT TRANSACTION TRANSACTION1
 
-	PRINT 'Automatic trading name format set to "yyyymmdd - Date"'
+	PRINT 'Automatic trading name format set to "yyyymmdd - Date"';
 
 END TRY
 
@@ -50,7 +50,7 @@ BEGIN CATCH
 
    BEGIN
 	ROLLBACK TRANSACTION TRANSACTION1
-	PRINT 'Error detected, all changes reversed'
+	PRINT 'Error detected, all changes reversed';
 END
 
    SELECT
@@ -59,6 +59,8 @@ END
 	ERROR_STATE() AS ErrorState,
 	ERROR_PROCEDURE() AS ErrorProcedure,
 	ERROR_LINE() AS ErrorLine,
-	ERROR_MESSAGE() AS ErrorMessage
+	ERROR_MESSAGE() AS ErrorMessage;
 
 END CATCH
+
+GO

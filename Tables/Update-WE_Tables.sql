@@ -37,7 +37,7 @@ From
 WHERE
 	INFORMATION_SCHEMA.TABLES.TABLE_TYPE != 'VIEW'
 
-Order by Statement;
+ORDER BY Statement;
 
 GO
 
