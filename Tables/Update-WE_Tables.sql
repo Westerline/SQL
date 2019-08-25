@@ -18,22 +18,28 @@ For example, you could append "WHERE BranchType = 'Domestic'".
 ===========================
 */
 
-USE AdventureWorks
+USE AdventureWorks;
+
 GO
 
 DECLARE @columnname varchar(10) = 'Branch'
 DECLARE @columnvalue varchar(10) = '902'
 
 Select
-	'UPDATE ' + TABLE_NAME + ' SET @columnname = @columnvalue ' as Statement
+	'UPDATE ' + INFORMATION_SCHEMA.COLUMNS.TABLE_NAME + ' SET ' + @columnname + '=' + @columnvalue + ';' as Statement
 
 From
 	INFORMATION_SCHEMA.COLUMNS
+	INNER JOIN
+	INFORMATION_SCHEMA.TABLES
+	ON INFORMATION_SCHEMA.COLUMNS.TABLE_NAME = INFORMATION_SCHEMA.TABLES.TABLE_NAME
 
 WHERE
-	COLUMN_NAME = @columnname AND TABLE_NAME NOT LIKE 'vi%'
+	INFORMATION_SCHEMA.TABLES.TABLE_TYPE != 'VIEW'
 
-Order by Statement
+Order by Statement;
+
+GO
 
 /*
 DECLARE @columnname varchar(10) = 'Branch'
@@ -41,44 +47,46 @@ DECLARE @columnvalue varchar(10) = '902'
 
 BEGIN TRY
 
-BEGIN TRANSACTION UPDATE_TABLES
+	BEGIN TRANSACTION UPDATE_TABLES
 
-	UPDATE B_Config SET @columnname = @columnvalue
-	UPDATE Specials SET @columnname = @columnvalue
-	UPDATE APInvMatchDetails SET @columnname = @columnvalue
-	UPDATE PricingCondition SET @columnname = @columnvalue
+		UPDATE B_Config SET @columnname = @columnvalue;
+		UPDATE Specials SET @columnname = @columnvalue;
+		UPDATE APInvMatchDetails SET @columnname = @columnvalue;
+		UPDATE PricingCondition SET @columnname = @columnvalue;
 
-COMMIT TRANSACTION UPDATE_TABLES
+	COMMIT TRANSACTION UPDATE_TABLES
 
-PRINT 'All tables have been updated.'
+	PRINT 'All tables have been updated.'
 
 END TRY
 
 BEGIN CATCH
 
-IF (@@TRANCOUNT > 0)
+	IF (@@TRANCOUNT > 0)
 
-BEGIN
+	BEGIN
 
-	ROLLBACK TRANSACTION UPDATE_TABLES
+		ROLLBACK TRANSACTION UPDATE_TABLES;
 
-	PRINT 'Error detected, all changes reversed'
+		PRINT 'Error detected, all changes reversed';
 
-END
+	END
 
-SELECT
+	SELECT
 
-	ERROR_NUMBER() AS ErrorNumber,
+		ERROR_NUMBER() AS ErrorNumber,
 
-	ERROR_SEVERITY() AS ErrorSeverity,
+		ERROR_SEVERITY() AS ErrorSeverity,
 
-	ERROR_STATE() AS ErrorState,
+		ERROR_STATE() AS ErrorState,
 
-	ERROR_PROCEDURE() AS ErrorProcedure,
+		ERROR_PROCEDURE() AS ErrorProcedure,
 
-	ERROR_LINE() AS ErrorLine,
+		ERROR_LINE() AS ErrorLine,
 
-	ERROR_MESSAGE() AS ErrorMessage
+		ERROR_MESSAGE() AS ErrorMessage;
 
 END CATCH
+
+GO
 */
