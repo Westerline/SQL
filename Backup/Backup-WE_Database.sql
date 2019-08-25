@@ -33,7 +33,7 @@ BEGIN TRY
     FROM DISK = @file_name
 
     WITH
-    CHECKSUM
+    CHECKSUM;
 
 END TRY
 
@@ -49,6 +49,8 @@ BEGIN CATCH
     ERROR_STATE() AS ErrorState,
     ERROR_PROCEDURE() AS ErrorProcedure,
     ERROR_LINE() AS ErrorLine,
-    ERROR_MESSAGE() AS ErrorMessage
+    ERROR_MESSAGE() AS ErrorMessage;
 
 END CATCH
+
+GO

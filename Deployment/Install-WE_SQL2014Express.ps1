@@ -108,6 +108,8 @@ Function Install-WE_SQL2014Express {
 
             Catch {
 
+                Write-Verbose "Unable to install SQL2014 express on $Computer. Please check that the required installation files are available and that you have administrator rights on the machine."
+
                 $Property = @{
                     Hostname = $Computer
                     Status   = 'Unsuccessful'

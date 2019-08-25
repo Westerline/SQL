@@ -7,8 +7,10 @@ Queries the master database table for the names of all databases.
 ===========================
 */
 
-Select
+SELECT
     name
 
-From
-    master.sys.databases
+FROM
+    master.sys.databases;
+
+GO

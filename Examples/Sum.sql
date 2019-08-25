@@ -1,15 +1,15 @@
-Select top 100
+SELECT top 100
     SUM(TL.SubBeforeTax) as SalesBeforeTax,
     SUM(TL.Quantity) as Quantity
 
-From
+FROM
     TransLines as TL
 
     Join
     TransHeaders as TH
     On TL.TransNo = TH.TransNo
 
-Where
+WHERE
 TL.Branch = '000'
     AND
     TL.UPC = '01'
@@ -17,7 +17,9 @@ TL.Branch = '000'
 
     --Format: YYYY-MM-DD HH:MM:SS.sss
     TH.Logged
-Between
+BETWEEN
 '2018-10-23 00:01:00.000'
 AND
-'2018-10-23 23:59:59.999'
+'2018-10-23 23:59:59.999';
+
+GO

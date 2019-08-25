@@ -32,4 +32,6 @@ WHERE
 
 ORDER BY
 	processes.loginame,
-	databases.name
+	databases.name;
+
+GO

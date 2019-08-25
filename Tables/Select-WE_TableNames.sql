@@ -13,7 +13,8 @@ Select-WE_TableNames.SQL
 ===========================
 */
 
-USE Master
+USE Master;
+
 GO
 
 SELECT
@@ -23,4 +24,6 @@ FROM
     AdventureWorks.INFORMATION_SCHEMA.TABLES
 
 WHERE
-    TABLE_TYPE = 'BASE TABLE'
+    TABLE_TYPE = 'BASE TABLE';
+
+GO

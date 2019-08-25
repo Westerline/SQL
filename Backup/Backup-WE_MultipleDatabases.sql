@@ -34,13 +34,13 @@ FROM
    master.dbo.sysdatabases
 
 WHERE
-   name NOT IN ('master','model','msdb','tempdb')
+   name NOT IN ('master','model','msdb','tempdb');
 
 OPEN db_cursor
 
 FETCH NEXT
    FROM db_cursor
-   INTO @database_name
+   INTO @database_name;
 
 WHILE @@FETCH_STATUS = 0
 
@@ -51,23 +51,23 @@ WHILE @@FETCH_STATUS = 0
       BACKUP DATABASE @database_name
          TO DISK = @file_name
          WITH
-         CHECKSUM
+         CHECKSUM;
 
       RESTORE VERIFYONLY
          FROM DISK = @file_name
          WITH
-         CHECKSUM
+         CHECKSUM;
 
       FETCH NEXT
          FROM db_cursor
-         INTO @database_name
+         INTO @database_name;
 
    END TRY
 
    BEGIN CATCH
 
-      PRINT 'Error detected, unable to backup:'
-      PRINT @database_name
+      PRINT 'Error detected, unable to backup:';
+      PRINT @database_name;
 
       SELECT
    ERROR_NUMBER() AS ErrorNumber,
@@ -75,14 +75,16 @@ WHILE @@FETCH_STATUS = 0
    ERROR_STATE() AS ErrorState,
    ERROR_PROCEDURE() AS ErrorProcedure,
    ERROR_LINE() AS ErrorLine,
-   ERROR_MESSAGE() AS ErrorMessage
+   ERROR_MESSAGE() AS ErrorMessage;
 
       FETCH NEXT
          FROM db_cursor
-         INTO @database_name
+         INTO @database_name;
 
    END CATCH
 
 CLOSE db_cursor
 
 DEALLOCATE db_cursor
+
+GO

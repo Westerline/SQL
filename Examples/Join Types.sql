@@ -36,3 +36,5 @@ FROM
     Orders
     FULL OUTER JOIN Customers
     ON Orders.CustomerID=Customers.CustomerID;
+
+GO

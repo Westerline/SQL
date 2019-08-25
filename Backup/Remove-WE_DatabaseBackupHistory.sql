@@ -8,6 +8,7 @@ By default, will clear the last thirty days of backup history.
 */
 
 USE MSDB;
+
 GO
 
 BEGIN TRY
@@ -15,7 +16,7 @@ BEGIN TRY
     DECLARE @OLDEST_DATE INT = 30
     DECLARE @DATE DATETIME
     SET @DATE = GETDATE()-@OLDEST_DATE
-    EXEC SP_DELETE_BACKUPHISTORY @DATE
+    EXEC SP_DELETE_BACKUPHISTORY @DATE;
 
 END TRY
 
@@ -27,6 +28,8 @@ BEGIN CATCH
     ERROR_STATE() AS ErrorState,
     ERROR_PROCEDURE() AS ErrorProcedure,
     ERROR_LINE() AS ErrorLine,
-    ERROR_MESSAGE() AS ErrorMessage
+    ERROR_MESSAGE() AS ErrorMessage;
 
 END CATCH
+
+GO

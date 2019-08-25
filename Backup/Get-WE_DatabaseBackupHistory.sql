@@ -1,10 +1,12 @@
 /*
+===========================
+Get-WE_DatabaseBackupHistory.sql
 
 .Notes
     Resources: modified from the script found on: https:
 //blog.sqlauthority.com/2018/05/13/how-to-find-last-full-
 backup-time-and-size-for-database-interview-question-of-the-week-173/
-
+===========================
 */
 
 SELECT
@@ -31,4 +33,6 @@ FROM
 
 ORDER BY
 	'Database Name',
-	'Finish Date'
+	'Finish Date';
+
+GO
