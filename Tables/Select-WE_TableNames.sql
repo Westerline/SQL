@@ -23,7 +23,6 @@ CREATE PROCEDURE "Select_WE_TableNames"
 AS
 
 DECLARE @select_table_template VARCHAR(MAX) =
-
     'SELECT
         Table_Name
     FROM
@@ -32,7 +31,6 @@ DECLARE @select_table_template VARCHAR(MAX) =
         TABLE_TYPE = ''BASE TABLE''
     ORDER BY
         Table_Name;'
-
 DECLARE @sql_script VARCHAR(MAX) = REPLACE(@select_table_template, '{database_name}', @database_name)
 
 EXEC (@sql_script);

@@ -22,7 +22,6 @@ DECLARE @data_file NVARCHAR(250) = 'C:\temp\AdventureWorks_Data.mdf'
 DECLARE @log_file NVARCHAR(250) = 'C:\temp\AdventureWorks_Log.ldf'
 
 USE [@database_name];
-
 GO
 
 BEGIN TRY
@@ -31,29 +30,29 @@ BEGIN TRY
 
 		UPDATE
 		dbo.Config
-
 		SET
-		Value = 'yyyymmdd - Date'
-
+		VALUE = 'yyyymmdd - Date'
 		WHERE
 		DESCRIPTION = 'Automatic Trading Name Format';
 
 	COMMIT TRANSACTION TRANSACTION1
 
-	PRINT 'Automatic trading name format set to "yyyymmdd - Date"';
+PRINT 'Automatic trading name format set to "yyyymmdd - Date"';
 
 END TRY
 
 BEGIN CATCH
 
-  IF (@@TRANCOUNT > 0)
+	IF (@@TRANCOUNT > 0)
 
-   BEGIN
+BEGIN
+
 	ROLLBACK TRANSACTION TRANSACTION1
 	PRINT 'Error detected, all changes reversed';
+
 END
 
-   SELECT
+	SELECT
 	ERROR_NUMBER() AS ErrorNumber,
 	ERROR_SEVERITY() AS ErrorSeverity,
 	ERROR_STATE() AS ErrorState,

@@ -186,20 +186,20 @@ WHERE heart_rate >= (0.50 * (220-30))
 
 Select heart_rate, exercisetype,
     Case
-		When heart_rate > 220-30 Then 'Above Max'
-		When heart_rate > (0.90 * (220-30)) Then 'Above Target'
-		When heart_rate > (0.50 * (220-30)) Then 'Within Target'
-		Else 'Below Target'
-	End as 'hr_zone'
+    When heart_rate > 220-30 Then 'Above Max'
+    When heart_rate > (0.90 * (220-30)) Then 'Above Target'
+    When heart_rate > (0.50 * (220-30)) Then 'Within Target'
+    Else 'Below Target'
+End as 'hr_zone'
 From exercise_logs;
 
 Select count(*),
     Case
-            When number_grade > 90 Then 'A'
-            When number_grade > 80 Then 'B'
-            When number_grade > 70 Then 'C'
-            Else 'F'
-        End as 'letter_grade'
+        When number_grade > 90 Then 'A'
+        When number_grade > 80 Then 'B'
+        When number_grade > 70 Then 'C'
+        Else 'F'
+    End as 'letter_grade'
 From student_grades
 Group by letter_grade;
 

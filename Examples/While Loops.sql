@@ -1,9 +1,7 @@
 --Break/Continue Example
 
-WHILE (
-SELECT AVG(ListPrice)
-FROM Production.Product
-) < $300
+WHILE (SELECT AVG(ListPrice)
+FROM Production.Product) < $300
 
 BEGIN
 
@@ -29,31 +27,29 @@ DECLARE Employee_Cursor CURSOR FOR
 
 SELECT
     LoginID, JobTitle
-
 FROM
     AdventureWorks2012.HumanResources.Employee
-
 WHERE
-    JobTitle = 'Marketing Specialist';
+JobTitle = 'Marketing Specialist';
 
-OPEN Employee_Cursor;
+OPEN
+Employee_Cursor;
 
-FETCH NEXT FROM Employee_Cursor;
+FETCH NEXT FROM
+Employee_Cursor;
 
 FETCH NEXT FROM Employee_Cursor INTO @EmployeeID, @Title;
-
 WHILE @@FETCH_STATUS = 0
 
-   BEGIN
+BEGIN
 
-    Print '   ' + @EmployeeID + '      '+  @Title
+    Print '   ' + @EmployeeID + '      '+  @Title;
 
     FETCH NEXT FROM Employee_Cursor;
 
 END;
 
 CLOSE Employee_Cursor;
-
 DEALLOCATE Employee_Cursor;
 
 GO

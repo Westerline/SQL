@@ -15,11 +15,11 @@ GO
 
 BEGIN TRY
 
-    CREATE DATABASE MyAdventureWorks
-
-    ON (FILENAME = 'C:\MySQLServer\MyAdventureWorks_Data.mdf'),
+    CREATE DATABASE
+        MyAdventureWorks
+    ON
+        (FILENAME = 'C:\MySQLServer\MyAdventureWorks_Data.mdf'),
         (FILENAME = 'C:\MySQLServer\MyAdventureWorks_Log.ldf')
-
     FOR ATTACH;
 
 END TRY

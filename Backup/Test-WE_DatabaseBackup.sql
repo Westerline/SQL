@@ -27,9 +27,7 @@ AS
 BEGIN TRY
 
     RESTORE VERIFYONLY
-
     FROM DISK = @file_name;
-    --WITH CHECKSUM
 
 END TRY
 

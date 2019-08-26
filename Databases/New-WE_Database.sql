@@ -17,19 +17,22 @@ GO
 
 BEGIN TRY
 
-    CREATE DATABASE Temp
-    ON
-    ( NAME = Temp_dat,
+    CREATE DATABASE
+        Temp
+    ON (
+        NAME = Temp_dat,
         FILENAME = 'C:\temp\Temp_dat.mdf',
         SIZE = 10000KB,
         MAXSIZE = UNLIMITED,
-        FILEGROWTH = 5000KB )
-    LOG ON
-    ( NAME = Temp_log,
+        FILEGROWTH = 5000KB
+    )
+    LOG ON (
+        NAME = Temp_log,
         FILENAME = 'C:\temp\Temp_log.ldf',
         SIZE = 5000KB,
         MAXSIZE = UNLIMITED,
-        FILEGROWTH = 5000KB );
+        FILEGROWTH = 5000KB
+    );
 
 END TRY
 

@@ -18,10 +18,8 @@ backup-transact-sql?view=sql-server-2017
 */
 
 CREATE PROCEDURE "Backup_WE_Database"
-
     @database_name NVARCHAR(50),
     @path NVARCHAR(MAX)
-
 AS
 
 DECLARE @file_date NVARCHAR(20) = CONVERT(NVARCHAR(20),GETDATE(),112)
@@ -30,23 +28,15 @@ DECLARE @file_name NVARCHAR(256) = @path + '\' + @database_name + '_' + @file_da
 BEGIN TRY
 
     BACKUP DATABASE @database_name
-
     TO DISK = @file_name
-
     WITH
-        --DIFFERENTIAL
-        --COPY_ONLY
-        --COMPRESSION
-        --ENCRYPTION AES_256 SERVER CERTIFICATE = @encryptor_name SERVER ASYMETRIC KEY = @encryptor_name
         CHECKSUM,
-        NAME = @database_name
+        NAME = @database_name;
 
     RESTORE VERIFYONLY
-
     FROM DISK = @file_name
-
     WITH
-    CHECKSUM;
+        CHECKSUM;
 
 END TRY
 
@@ -55,7 +45,6 @@ BEGIN CATCH
 
     PRINT 'Error detected, unable to backup:'
     PRINT @database_name
-
     SELECT
     ERROR_NUMBER() AS ErrorNumber,
     ERROR_SEVERITY() AS ErrorSeverity,

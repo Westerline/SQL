@@ -29,15 +29,15 @@ BEGIN TRY
 
 	COMMIT TRANSACTION UPDATE_TABLES
 
-	PRINT 'All tables have been updated.'
+	PRINT 'All tables have been updated.';
 
 END TRY
 
 BEGIN CATCH
 
-	IF (@@TRANCOUNT > 0)
+IF (@@TRANCOUNT > 0)
 
-	BEGIN
+BEGIN
 
 	ROLLBACK TRANSACTION UPDATE_TABLES;
 
@@ -46,17 +46,11 @@ BEGIN CATCH
 END
 
 	SELECT
-
 	ERROR_NUMBER() AS ErrorNumber,
-
 	ERROR_SEVERITY() AS ErrorSeverity,
-
 	ERROR_STATE() AS ErrorState,
-
 	ERROR_PROCEDURE() AS ErrorProcedure,
-
 	ERROR_LINE() AS ErrorLine,
-
 	ERROR_MESSAGE() AS ErrorMessage;
 
 END CATCH

@@ -43,33 +43,32 @@ FROM
    master.dbo.sysdatabases
 
 WHERE
-   name NOT IN ('master','model','msdb','tempdb');
+name NOT IN ('master','model','msdb','tempdb');
 
 OPEN db_cursor
 
 FETCH NEXT
-   FROM db_cursor
-   INTO @database_name;
+FROM db_cursor
+INTO @database_name;
 
 WHILE @@FETCH_STATUS = 0
 
    BEGIN TRY
 
       SET @file_name = @path + '\' + @database_name + '_' + @file_date + '.BAK'
-
       BACKUP DATABASE @database_name
-         TO DISK = @file_name
-         WITH
+      TO DISK = @file_name
+      WITH
          CHECKSUM;
 
       RESTORE VERIFYONLY
-         FROM DISK = @file_name
-         WITH
+      FROM DISK = @file_name
+      WITH
          CHECKSUM;
 
       FETCH NEXT
-         FROM db_cursor
-         INTO @database_name;
+      FROM db_cursor
+      INTO @database_name;
 
    END TRY
 
@@ -87,13 +86,12 @@ WHILE @@FETCH_STATUS = 0
    ERROR_MESSAGE() AS ErrorMessage;
 
       FETCH NEXT
-         FROM db_cursor
-         INTO @database_name;
+      FROM db_cursor
+      INTO @database_name;
 
    END CATCH
 
 CLOSE db_cursor
-
 DEALLOCATE db_cursor
 
 GO

@@ -24,8 +24,8 @@ SELECT
     msdb.dbo.backupmediafamily.physical_device_name AS 'Physical Device Name',
     CAST((msdb.dbo.backupset.backup_size/1048576.0) AS INT) AS 'Backup Size(MB)',
     CASE msdb.dbo.backupset.type
-        WHEN 'D' THEN 'Database'
-        WHEN 'L' THEN 'Log'
+    WHEN 'D' THEN 'Database'
+    WHEN 'L' THEN 'Log'
     END AS 'Backup Type',
     msdb.dbo.backupset.backup_start_date AS 'Start Date',
     msdb.dbo.backupset.backup_finish_date AS 'Finish Date',
@@ -41,7 +41,7 @@ FROM
     ON msdb.dbo.backupmediafamily.media_set_id = msdb.dbo.backupset.media_set_id
 
 ORDER BY
-	'Database Name',
-	'Finish Date';
+    'Database Name',
+    'Finish Date';
 
 GO

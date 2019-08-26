@@ -15,12 +15,10 @@ Queries the master database table for the names of all databases.
 */
 
 CREATE PROCEDURE "Get_WE_DatabaseName"
-
 AS
 
 SELECT
     name
-
 FROM
     master.sys.databases;
 

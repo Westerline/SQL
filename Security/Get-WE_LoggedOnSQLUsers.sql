@@ -27,18 +27,13 @@ SELECT
     processes.hostname AS 'Host Name',
     databases.name AS 'Name',
     processes.cmd as 'Cmd'
-
 FROM
     master.dbo.sysprocesses AS processes
-
-    JOIN
+    INNER JOIN
     master.dbo.sysdatabases AS databases
-
-    ON
-    processes.dbid = databases.dbid
-
+    ON processes.dbid = databases.dbid
 ORDER BY
-	processes.loginame,
-	databases.name;
+    processes.loginame,
+    databases.name;
 
 GO
