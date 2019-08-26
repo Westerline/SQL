@@ -22,8 +22,8 @@ USE AdventureWorks;
 
 GO
 
-DECLARE @columnname varchar(10) = 'Branch'
-DECLARE @columnvalue varchar(10) = '902'
+DECLARE @columnname NVARCHAR(10) = 'Branch'
+DECLARE @columnvalue NVARCHAR(10) = '902'
 
 Select
 	'UPDATE ' + INFORMATION_SCHEMA.COLUMNS.TABLE_NAME + ' SET ' + @columnname + '=' + @columnvalue + ';' as Statement
@@ -42,8 +42,8 @@ ORDER BY Statement;
 GO
 
 /*
-DECLARE @columnname varchar(10) = 'Branch'
-DECLARE @columnvalue varchar(10) = '902'
+DECLARE @columnname NVARCHAR(10) = 'Branch'
+DECLARE @columnvalue NVARCHAR(10) = '902'
 
 BEGIN TRY
 

@@ -12,7 +12,7 @@ restore-statements-verifyonly-transact-sql?view=sql-server-2017
 ===========================
 */
 
-DECLARE @file_name VARCHAR(256) = 'C:\temp\HUB_20190822.bak'
+DECLARE @file_name NVARCHAR(256) = 'C:\temp\HUB_20190822.bak'
 
 BEGIN TRY
 

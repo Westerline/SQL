@@ -162,21 +162,21 @@ INSERT INTO exercise_logs
 VALUES
     ('hiking', 60, 80, 85);
 
-SELECT CAST(ExerciseType AS VARCHAR(100)) ExerciseType,
+SELECT CAST(ExerciseType AS NVARCHAR(100)) ExerciseType,
     SUM(Calories) AS Total_Calories
 FROM exercise_logs
-GROUP   BY CAST(ExerciseType AS VARCHAR(100))
+GROUP   BY CAST(ExerciseType AS NVARCHAR(100))
 Having  SUM(Calories) > 150;
 
-SELECT CAST(ExerciseType AS VARCHAR(100)) ExerciseType,
+SELECT CAST(ExerciseType AS NVARCHAR(100)) ExerciseType,
     AVG(Calories) AS Average_Calories
 FROM exercise_logs
-GROUP   BY CAST(ExerciseType AS VARCHAR(100))
+GROUP   BY CAST(ExerciseType AS NVARCHAR(100))
 Having  AVG(Calories) > 70;
 
-Select CAST(ExerciseType AS VARCHAR(100)) ExerciseType
+Select CAST(ExerciseType AS NVARCHAR(100)) ExerciseType
 From exercise_logs
-Group By CAST(ExerciseType AS VARCHAR(100))
+Group By CAST(ExerciseType AS NVARCHAR(100))
 Having Count(*) >= 2;
 
 SELECT Count(*)

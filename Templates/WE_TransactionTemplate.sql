@@ -17,9 +17,9 @@ error, the next SELECT statement will not execute if both are terminated by semi
 ===========================
 */
 
-DECLARE @database_name VARCHAR(50) = 'database1'
-DECLARE @data_file VARCHAR(250) = 'C:\temp\AdventureWorks_Data.mdf'
-DECLARE @log_file VARCHAR(250) = 'C:\temp\AdventureWorks_Log.ldf'
+DECLARE @database_name NVARCHAR(50) = 'database1'
+DECLARE @data_file NVARCHAR(250) = 'C:\temp\AdventureWorks_Data.mdf'
+DECLARE @log_file NVARCHAR(250) = 'C:\temp\AdventureWorks_Log.ldf'
 
 USE [@database_name];
 

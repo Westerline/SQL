@@ -4,7 +4,7 @@ HAVING clause is used to filter groups once you've declared a GROUP BY statement
 */
 
 SELECT
-    CAST(ExerciseType AS VARCHAR(100)) ExerciseType,
+    CAST(ExerciseType AS NVARCHAR(100)) ExerciseType,
     SUM(Calories) AS Total_Calories
 
 FROM
@@ -14,5 +14,5 @@ WHERE
     ExterciseType = 'Cardio'
 
 GROUP BY
-    CAST(ExerciseType AS VARCHAR(100))
+    CAST(ExerciseType AS NVARCHAR(100))
 HAVING SUM(Calories) > 150;

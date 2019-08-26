@@ -2,17 +2,29 @@
 ===========================
 Backup-WE_Database.sql
 
+.Description
 For more backup options, refer to: https:
 //docs.microsoft.com/en-us/sql/t-sql/statements/
 backup-transact-sql?view=sql-server-2017
+
+.Examples
+EXEC Backup-WE_Database Adventureworks 'C:\temp'
+
+.Notes
+    -To do:
+        Add, if then logic to allow for backup options.
 ===========================
 */
 
-DECLARE @database_name VARCHAR(50) = 'HUB'
-DECLARE @path VARCHAR(256) = 'C:\temp\'
-DECLARE @file_date VARCHAR(20) = CONVERT(VARCHAR(20),GETDATE(),112)
-DECLARE @file_name VARCHAR(256)
-SET @file_name = @path + @database_name + '_' + @file_date + '.BAK'
+CREATE PROCEDURE "Backup_WE_Database"
+
+    @database_name NVARCHAR(50),
+    @path NVARCHAR(MAX)
+
+AS
+
+DECLARE @file_date NVARCHAR(20) = CONVERT(NVARCHAR(20),GETDATE(),112)
+DECLARE @file_name NVARCHAR(256) = @path + '\' + @database_name + '_' + @file_date + '.BAK'
 
 BEGIN TRY
 

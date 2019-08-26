@@ -23,8 +23,8 @@ END
 
 --Cursor Example
 
-DECLARE @EmployeeID as nvarchar(256)
-DECLARE @Title as nvarchar(50)
+DECLARE @EmployeeID as nNVARCHAR(256)
+DECLARE @Title as nNVARCHAR(50)
 DECLARE Employee_Cursor CURSOR FOR
 
 SELECT

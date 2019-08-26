@@ -1,14 +1,13 @@
 CREATE PROCEDURE FindMyData_String
-    @DataToFind NVARCHAR(4000),
+    @DataToFind NNVARCHAR(4000),
     @ExactMatch BIT = 0
 AS
-SET NOCOUNT ON
 
 DECLARE @Temp TABLE(RowId INT IDENTITY(1,1),
     SchemaName sysname,
     TableName sysname,
     ColumnName SysName,
-    DataType VARCHAR(100),
+    DataType NVARCHAR(100),
     DataFound BIT)
 
 INSERT  INTO @Temp
@@ -19,7 +18,7 @@ FROM Information_Schema.Columns AS C
     ON C.Table_Name = T.Table_Name
         AND C.TABLE_SCHEMA = T.TABLE_SCHEMA
 WHERE   Table_Type = 'Base Table'
-    And Data_Type In ('ntext','text','nvarchar','nchar','varchar','char')
+    And Data_Type In ('ntext','text','nNVARCHAR','nchar','NVARCHAR','char')
 
 
 DECLARE @i INT
@@ -27,15 +26,15 @@ DECLARE @MAX INT
 DECLARE @TableName sysname
 DECLARE @ColumnName sysname
 DECLARE @SchemaName sysname
-DECLARE @SQL NVARCHAR(4000)
-DECLARE @PARAMETERS NVARCHAR(4000)
+DECLARE @SQL NNVARCHAR(4000)
+DECLARE @PARAMETERS NNVARCHAR(4000)
 DECLARE @DataExists BIT
-DECLARE @SQLTemplate NVARCHAR(4000)
+DECLARE @SQLTemplate NNVARCHAR(4000)
 
 SELECT @SQLTemplate = CASE WHEN @ExactMatch = 1
                             THEN 'If Exists(Select *
                                           From   ReplaceTableName
-                                          Where  Convert(nVarChar(4000), [ReplaceColumnName])
+                                          Where  Convert(NVARCHAR(4000), [ReplaceColumnName])
                                                        = ''' + @DataToFind + '''
                                           )
                                      Set @DataExists = 1
@@ -43,7 +42,7 @@ SELECT @SQLTemplate = CASE WHEN @ExactMatch = 1
                                      Set @DataExists = 0'
                             ELSE 'If Exists(Select *
                                           From   ReplaceTableName
-                                          Where  Convert(nVarChar(4000), [ReplaceColumnName])
+                                          Where  Convert(NVARCHAR(4000), [ReplaceColumnName])
                                                        Like ''%' + @DataToFind + '%''
                                           )
                                      Set @DataExists = 1
@@ -77,6 +76,8 @@ FROM @Temp
 WHERE   DataFound = 1
 GO
 
-/* exec FindMyData_string 'google', 0 */
-
-exec FindMyData_string '192.192.102.103', 0
+/*
+exec FindMyData_string 'google', 0
+parameter 1 = Data to Find
+parameter 2 = Exact match, 1 = true, 0 = false
+*/

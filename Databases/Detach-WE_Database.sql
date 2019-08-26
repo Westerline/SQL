@@ -7,7 +7,7 @@ To-do:
 ===========================
 */
 
-DECLARE @database_name VARCHAR(50) = 'MyAdventureWorks'
+DECLARE @database_name NVARCHAR(50) = 'MyAdventureWorks'
 
 BEGIN TRY
 

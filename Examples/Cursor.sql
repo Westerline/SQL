@@ -1,5 +1,5 @@
 DECLARE @BusinessEntityID as INT;
-DECLARE @BusinessName as NVARCHAR(50);
+DECLARE @BusinessName as NNVARCHAR(50);
 
 DECLARE @BusinessCursor as CURSOR;
 
@@ -12,7 +12,7 @@ FETCH NEXT FROM @BusinessCursor INTO @BusinessEntityID, @BusinessName;
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-    PRINT cast(@BusinessEntityID as VARCHAR (50)) + ' ' + @BusinessName;
+    PRINT cast(@BusinessEntityID as NVARCHAR (50)) + ' ' + @BusinessName;
     FETCH NEXT FROM @BusinessCursor INTO @BusinessEntityID, @BusinessName;
 END
 

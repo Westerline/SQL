@@ -6,7 +6,7 @@
 */
 
 CREATE PROCEDURE dbo.ObjectEncryptionCracker
-  @object_name NVARCHAR(MAX)
+  @object_name NNVARCHAR(MAX)
 WITH
   ENCRYPTION
 AS
@@ -14,11 +14,11 @@ BEGIN
   DECLARE @secret VARBINARY(MAX);
   DECLARE @known_encrypted VARBINARY(MAX);
   DECLARE @known_plain VARBINARY(MAX);
-  DECLARE @object_type NVARCHAR(MAX);
+  DECLARE @object_type NNVARCHAR(MAX);
   SELECT @secret = imageval
   FROM sys.sysobjvalues
   WHERE   objid = OBJECT_ID(@object_name);
-  DECLARE @cmd NVARCHAR(MAX);
+  DECLARE @cmd NNVARCHAR(MAX);
   SELECT @cmd = CASE type_desc
                    WHEN 'SQL_SCALAR_FUNCTION'
                      THEN 'ALTER FUNCTION ' + @object_name + '()RETURNS INT WITH ENCRYPTION AS BEGIN RETURN 0;END;'
@@ -33,7 +33,7 @@ BEGIN
                  END
   FROM sys.objects
   WHERE   object_id = OBJECT_ID(@object_name);
-  SELECT @cmd = REPLICATE(CAST(CHAR(32) AS NVARCHAR(MAX)), DATALENGTH(@secret)) + @cmd;
+  SELECT @cmd = REPLICATE(CAST(CHAR(32) AS NNVARCHAR(MAX)), DATALENGTH(@secret)) + @cmd;
   SELECT @known_plain = CAST(@cmd AS VARBINARY(MAX));
   BEGIN TRAN;
   EXEC(@cmd);
@@ -52,7 +52,7 @@ BEGIN
     SET @i += 2;
   END
   SET @cmd = N'SELECT  (SELECT ''--''+CHAR(13)+CHAR(10)+''GO''+CHAR(13)+CHAR(10)+'
-           + N'CAST(@plain AS NVARCHAR(MAX))+CHAR(13)+CHAR(10)+''GO''+CHAR(13)+CHAR(10)+''--'''
+           + N'CAST(@plain AS NNVARCHAR(MAX))+CHAR(13)+CHAR(10)+''GO''+CHAR(13)+CHAR(10)+''--'''
            + N' AS [processing-instruction(sql)] FOR XML PATH(''''),TYPE) AS [object_definition for '
            + REPLACE(@object_name, ']', ']]') + ']';
   EXEC sp_executesql @cmd, N'@plain VARBINARY(MAX)', @plain;

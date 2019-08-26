@@ -5,7 +5,7 @@ Backup-WE_MultipleDatabases.sql
 .Description
 Backs up all databases found in master.dbo.sysdatabases (excludes master, model, msdb,
 and tempdb).
-Convert style 112 converts the current date/time to a VARCHAR yyyymmdd.
+Convert style 112 converts the current date/time to a NVARCHAR yyyymmdd.
 Opens a cursor for each database name in an instance.
 Increments the cursor and performs a database backup for each database name.
 
@@ -21,10 +21,17 @@ To-do:
 ===========================
 */
 
-DECLARE @database_name VARCHAR(50)
-DECLARE @path VARCHAR(256) = 'C:\temp\'
-DECLARE @file_name VARCHAR(256)
-DECLARE @file_date VARCHAR(20) = CONVERT(VARCHAR(20),GETDATE(),112)
+CREATE PROCEDURE "Backup_WE_Database"
+
+
+   @path NVARCHAR(256)
+
+AS
+
+DECLARE @database_name NVARCHAR(50)
+DECLARE @path NVARCHAR(256) = 'C:\temp'
+DECLARE @file_name NVARCHAR(256)
+DECLARE @file_date NVARCHAR(20) = CONVERT(NVARCHAR(20),GETDATE(),112)
 DECLARE db_cursor CURSOR READ_ONLY FOR
 
 SELECT
@@ -46,7 +53,7 @@ WHILE @@FETCH_STATUS = 0
 
    BEGIN TRY
 
-      SET @file_name = @path + @database_name + '_' + @file_date + '.BAK'
+      SET @file_name = @path + '\' + @database_name + '_' + @file_date + '.BAK'
 
       BACKUP DATABASE @database_name
          TO DISK = @file_name
