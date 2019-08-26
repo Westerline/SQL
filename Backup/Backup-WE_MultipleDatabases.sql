@@ -14,22 +14,24 @@ For more backup options, refer to: https:
 //docs.microsoft.com/en-us/sql/t-sql/statements/
 backup-transact-sql?view=sql-server-2017
 
+.Examples
+EXEC Backup_WE_MultipleDatabases 'C:\temp'
+
 .Notes
-To-do:
--Add parameter to exclude additonal databases
--Check if pointer already exists, if so close pointer.
+   To-do:
+      -Add parameter to exclude additonal databases
+      -Check if pointer already exists, if so close pointer.
+   Tested
 ===========================
 */
 
-CREATE PROCEDURE "Backup_WE_Database"
-
+CREATE PROCEDURE "Backup_WE_MultipleDatabases"
 
    @path NVARCHAR(256)
 
 AS
 
 DECLARE @database_name NVARCHAR(50)
-DECLARE @path NVARCHAR(256) = 'C:\temp'
 DECLARE @file_name NVARCHAR(256)
 DECLARE @file_date NVARCHAR(20) = CONVERT(NVARCHAR(20),GETDATE(),112)
 DECLARE db_cursor CURSOR READ_ONLY FOR

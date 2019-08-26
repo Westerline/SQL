@@ -2,12 +2,20 @@
 ===========================
 Attach-WE_Database.sql
 
+.Examples
+    -EXEC Detach_WE_Database Adventureworks
+
 .Notes
-To-do:
+    To do:
+    Tested
 ===========================
 */
 
-DECLARE @database_name NVARCHAR(50) = 'MyAdventureWorks'
+CREATE PROCEDURE "Detach_WE_Database"
+
+    @database_name NVARCHAR(50)
+
+AS
 
 BEGIN TRY
 

@@ -15,9 +15,6 @@ Set-WE_SQLUserRole.sql
 ===========================
 */
 
-USE AdventureWorks
-GO
-
 BEGIN TRY
 
     ALTER SERVER ROLE denydatawriter ADD MEMBER username;

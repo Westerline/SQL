@@ -2,21 +2,30 @@
 ===========================
 Remove-WE_DatabaseBackupHistory.sql
 
-Clear backup history from MSDB. Should be done regularly to prevent the backup history logs from growing too large.
-By default, will clear the last thirty days of backup history.
+.Description
+    Clear backup history from MSDB. Should be done regularly to prevent the backup history logs from growing too large.
+    By default, will clear the last thirty days of backup history.
+
+.Examples
+    EXEC Remove_WE_DatabaseBackupHistory 30
+
+.Notes
+    To do:
+        -
+    Tested
 ===========================
 */
 
-USE MSDB;
+CREATE PROCEDURE "Remove_WE_DatabaseBackupHistory"
 
-GO
+    @oldest_date INT
+
+AS
 
 BEGIN TRY
 
-    DECLARE @OLDEST_DATE INT = 30
-    DECLARE @DATE DATETIME
-    SET @DATE = GETDATE()-@OLDEST_DATE
-    EXEC SP_DELETE_BACKUPHISTORY @DATE;
+    DECLARE @date DATETIME = GETDATE()-@oldest_date
+    EXEC msdb.dbo.sp_delete_backuphistory @date;
 
 END TRY
 

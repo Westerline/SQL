@@ -2,15 +2,24 @@
 ===========================
 Get-WE_DatabaseBackupHistory.sql
 
+.Examples
+EXEC Get_WE_DatabaseBackupHistory
+
 .Notes
-    Resources: modified from the script found on: https:
-//blog.sqlauthority.com/2018/05/13/how-to-find-last-full-
-backup-time-and-size-for-database-interview-question-of-the-week-173/
+    Resources:
+        -modified from the script found on:
+        https://blog.sqlauthority.com/2018/05/13/how-to-find-last-full-backup-time-and-size-for-database-interview-question-of-the-week-173/
+    To do:
+    Tested
 ===========================
 */
 
+CREATE PROCEDURE "Get_WE_DatabaseBackupHistory"
+
+AS
+
 SELECT
-    CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS Server,
+    CONVERT(CHAR(100), SERVERPROPERTY('Servername')) AS 'Server',
     msdb.dbo.backupset.database_name AS 'Database Name',
     msdb.dbo.backupmediafamily.physical_device_name AS 'Physical Device Name',
     CAST((msdb.dbo.backupset.backup_size/1048576.0) AS INT) AS 'Backup Size(MB)',

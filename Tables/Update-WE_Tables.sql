@@ -12,39 +12,42 @@ In my example, every database table that has a 'Branch' column will have '902' a
 for that column. To further refine the generated update statments, edit SELECT AS STATEMENT.
 For example, you could append "WHERE BranchType = 'Domestic'".
 
+.Examples
+	-EXEC Update_WE_Tables 'Column1', 'NewValue'
+
 .Notes
 	To-do:
-		-Automatically execute the generated UPDATE statements.
+		-Filter tables that have the specified column name.
+		-Allow for database_name parameter
+		-Separate into two different stored proceedures (1) generate UPDATE statements (2) while loop against UPDATE statements with transaction rolback.
+	Tested
 ===========================
 */
 
-USE AdventureWorks;
+CREATE PROCEDURE "Update_WE_Tables"
 
-GO
+	@column_name NVARCHAR(50),
+	@column_value NVARCHAR(50)
 
-DECLARE @columnname NVARCHAR(10) = 'Branch'
-DECLARE @columnvalue NVARCHAR(10) = '902'
+AS
 
-Select
-	'UPDATE ' + INFORMATION_SCHEMA.COLUMNS.TABLE_NAME + ' SET ' + @columnname + '=' + @columnvalue + ';' as Statement
+SELECT
+	'UPDATE ' + INFORMATION_SCHEMA.TABLES.TABLE_NAME + ' SET ' + @column_name + '=' + @column_value + ';' as Statement
 
-From
-	INFORMATION_SCHEMA.COLUMNS
-	INNER JOIN
+FROM
 	INFORMATION_SCHEMA.TABLES
+	INNER JOIN INFORMATION_SCHEMA.COLUMNS
 	ON INFORMATION_SCHEMA.COLUMNS.TABLE_NAME = INFORMATION_SCHEMA.TABLES.TABLE_NAME
 
 WHERE
 	INFORMATION_SCHEMA.TABLES.TABLE_TYPE != 'VIEW'
+	AND INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME = @column_name
 
 ORDER BY Statement;
 
 GO
 
 /*
-DECLARE @columnname NVARCHAR(10) = 'Branch'
-DECLARE @columnvalue NVARCHAR(10) = '902'
-
 BEGIN TRY
 
 	BEGIN TRANSACTION UPDATE_TABLES
@@ -52,7 +55,6 @@ BEGIN TRY
 		UPDATE B_Config SET @columnname = @columnvalue;
 		UPDATE Specials SET @columnname = @columnvalue;
 		UPDATE APInvMatchDetails SET @columnname = @columnvalue;
-		UPDATE PricingCondition SET @columnname = @columnvalue;
 
 	COMMIT TRANSACTION UPDATE_TABLES
 

@@ -8,11 +8,12 @@ For more backup options, refer to: https:
 backup-transact-sql?view=sql-server-2017
 
 .Examples
-EXEC Backup-WE_Database Adventureworks 'C:\temp'
+    -EXEC Backup_WE_Database Adventureworks 'C:\temp'
 
 .Notes
-    -To do:
-        Add, if then logic to allow for backup options.
+    To do:
+        -Add, if then logic to allow for backup options.
+    Tested
 ===========================
 */
 

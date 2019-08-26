@@ -7,23 +7,32 @@ Select-WE_TableNames.SQL
     Adjust the datbase name in the FROM statement (AdventureWorks)
     to match the database you'd like to query.
 
+.Examples
+    -EXEC Select_WE_TableNames Adventureworks
+
 .Notes
-    -To-do:
-        Add option for variable input for FROM statement
+    To-do:
+    Tested
 ===========================
 */
 
-USE Master;
+CREATE PROCEDURE "Select_WE_TableNames"
 
-GO
+    @database_name NVARCHAR(50)
 
-SELECT
-    TABLE_NAME
+AS
 
-FROM
-    AdventureWorks.INFORMATION_SCHEMA.TABLES
+DECLARE @select_table_template VARCHAR(MAX) =
 
-WHERE
-    TABLE_TYPE = 'BASE TABLE';
+    'SELECT
+        Table_Name
+    FROM
+        {database_name}.INFORMATION_SCHEMA.TABLES
+    WHERE
+        TABLE_TYPE = ''BASE TABLE''
+    ORDER BY
+        Table_Name;'
 
-GO
+DECLARE @sql_script VARCHAR(MAX) = REPLACE(@select_table_template, '{database_name}', @database_name)
+
+EXEC (@sql_script);

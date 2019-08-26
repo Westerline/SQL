@@ -6,8 +6,20 @@ Get-WE_LoggedOnSQLUsers.sql
     Queries the SQL Server to see which users are logged in.
     Can filter based on database name or other fields by adding a
     WHERE statement.
+
+.Examples
+    -EXEC Get_WE_LoggedOnSQLUsers
+
+.Notes
+    To do:
+        -WHERE statement with proceedure parameter that accepts individual, multiple, or wildcard input for database names.
+    Tested
 ===========================
 */
+
+CREATE PROCEDURE "Get_WE_LoggedOnSQLUsers"
+
+AS
 
 SELECT
     processes.status AS 'Status',
@@ -24,11 +36,6 @@ FROM
 
     ON
     processes.dbid = databases.dbid
-
-/*
-WHERE
-	databases.name = 'Database'
-*/
 
 ORDER BY
 	processes.loginame,
