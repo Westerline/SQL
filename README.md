@@ -1,6 +1,6 @@
 # SQL Tools Repository
 
-* This repository is a collection of tool-oriented Transact-SQL scripts. These tools are meant to perform one or two simple tasks. For more complex sequences, you can mix and match tools.
+* This repository is a collection of tool-oriented Transact-SQL scripts and stored proceedures. These tools are meant to perform one or two simple tasks. For more complex sequences, you can mix and match tools.
 * If parameterized input is appropriate, the tool or script is wrapped in a PowerShell script. All other tools are created as T-SQL scripts.
 
 ## Getting Started
