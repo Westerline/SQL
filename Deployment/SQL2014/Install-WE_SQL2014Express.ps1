@@ -74,7 +74,7 @@ Function Install-WE_SQL2014Express {
             ValueFromPipeline = $True,
             ValueFromPipelineByPropertyName = $True)]
         [ValidateNotNullOrEmpty()]
-        [String] $ConfigurationFile = 'ConfigurationFile.ini',
+        [String] $ConfigurationFile = 'ConfigurationFile_x64.ini',
 
         [Parameter(Mandatory = $False,
             ValueFromPipeline = $True,
